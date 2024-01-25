@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/rsteube/carapace"
 	"github.com/rsteube/carapace/pkg/execlog"
 )
 
@@ -28,10 +29,12 @@ func Bash() []string {
 	} {
 		path, err := filepath.EvalSymlinks(location)
 		if err != nil {
+			carapace.LOG.Println(err.Error())
 			continue
 		}
 		entries, err := os.ReadDir(path)
 		if err != nil {
+			carapace.LOG.Println(err.Error())
 			continue
 		}
 
