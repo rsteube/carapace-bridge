@@ -2,6 +2,7 @@ package bridges
 
 import (
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -25,7 +26,11 @@ func Bash() []string {
 		"/usr/local/share/bash-completion/completions",                      // osx
 		"/usr/share/bash-completion/completions",                            // linux
 	} {
-		entries, err := os.ReadDir(location)
+		path, err := filepath.EvalSymlinks(location)
+		if err != nil {
+			continue
+		}
+		entries, err := os.ReadDir(path)
 		if err != nil {
 			continue
 		}
